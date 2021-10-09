@@ -7,6 +7,24 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script>
+      function validate() {
+          var mfpercent = document.forms["newplan"]["mutualfunds"].value;
+          var stkpercent = document.forms["newplan"]["stocks"].value;
+          var goldpercent = document.forms["newplan"]["gold"].value;
+          var fdpercent = document.forms["newplan"]["fd"].value;
+          var realpercent = document.forms["newplan"]["realestate"].value;
+
+          var sum = mfpercent+stkpercent+goldpercent+fdpercent+realpercent;
+          if( sum!=100){
+              console.log(sum);
+              alert("total percent  should be 100");
+              return false;
+          }
+          return true;
+
+      }
+  </script>
   <style>
     /* Remove the navbar's default margin-bottom and rounded borders */ 
     .navbar {
@@ -44,7 +62,7 @@
     }
 	.investments {
 	  border-radius:10px;
-	  background-color: #FFF2CC;
+	  background-color: #A3BCB6;
 	  text-align: center;
 	}
 	.plans {
@@ -52,6 +70,22 @@
 	  background-color: #CAF1DE;
 	  text-align: center;
 	}
+    form
+    {
+    text-align: center;
+ 
+    }
+
+    label{
+    align-items: center;
+    direction: ltr; 
+    }
+
+    input{
+    direction: ltr; 
+    }
+
+ 
   </style>
 </head>
 <body>
@@ -80,32 +114,41 @@
 <div class="container-fluid text-center">    
   <div class="row content">
     <div class="col-sm-2 sidenav">
-     <!-- <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p> -->
+
     </div>
     <div class="col-sm-8 text-left"> 
-      <h1>Welcome to Stockopoly</h1>
-	  <div class="investments" >
-		<h1>Investment Options</h1>
-		<a href="mutualfunds.html"><p >Mutual Funds</p></a>
-    <a href="stocks.html"><p >Stock Market</p></a>
-    <a href="gold.html"><p >Gold Investment</p></a>
-    <a href="fd.html"><p >Fixed Deposits</p></a>
-    <a href="realestate.html"><p >Real Estate</p></a>
-	  </div>
-	  <div  class="plans" >
-		  <a href="myplans.html"><h1>My plans</h1></a>
-	  </div>
-	  <div  class="newplan" align="right" >
-      <a href="newplan.html">
-	      <img src="https://img.icons8.com/ios/50/000000/plus--v1.png"/>
-      </a>
-	  </div>
+      <h1>New Plan</h1>
+
+      <form name="newplan" onsubmit="return validate()" action="/action_page.php" method="POST">
+        <label for="amount">Investment Amount:</label>
+        <input type="number" id="amount" name="amount" min="0">&#8377<br>
+        <h2>Percentage in each category</h2>
+        <label for="mutualfunds">Mutual Funds  :</label>
+        <input type="number" id="mutualfunds" name="mutualfunds" min="1" max="100">&#37<br>
+
+        <label for="stocks">Stock Market:  </label>
+        <input type="number" id="stocks" name="stocks" min="1" max="100">&#37<br>
+
+        <label for="gold">Gold Investment:  </label>
+        <input type="number" id="gold" name="gold" min="1" max="100">&#37<br>
+
+        <label for="fd">Fixed Deposits:  </label>
+        <input type="number" id="fd" name="fd" min="1" max="100">&#37<br>
+
+        <label for="realestate">Real estate:  </label>
+        <input type="number" id="realestate" name="realestate" min="1" max="100">&#37<br>
+        <input type="submit" value="Submit">
+      </form>
     </div>
 	
     <div class="col-sm-2 sidenav">
       
+	  <!--<div class="well">
+        <p>ADS</p>
+      </div>
+      <div class="well">
+        <p>ADS</p>
+      </div> -->
     </div>
   </div>
 </div>
