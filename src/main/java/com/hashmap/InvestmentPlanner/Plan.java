@@ -81,7 +81,7 @@ public class Plan {
 			r.fdReturnsPercentage = (r.fdReturnsAmount * 100) / totalReturnAmount;
 			r.mfReturnsPercentage = (r.mfReturnsAmount * 100) / totalReturnAmount;
 			r.ppfReturnsPercentage = (r.ppfReturnsAmount * 100) / totalReturnAmount;
-			r.niftyReturnsAmount = (r.niftyReturnsAmount * 100) / totalReturnAmount;
+			r.niftyReturnsPercentage = (r.niftyReturnsAmount * 100) / totalReturnAmount;
 			r.propertyReturnsPercentage = (r.propertyReutrnsAmount * 100) / totalReturnAmount;
 			r.goldReturnsPercentage = (r.goldReturnsAmount * 100) / totalReturnAmount;
 			
