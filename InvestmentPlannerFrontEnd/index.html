@@ -1,0 +1,26 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        This is demo page
+
+        <script type="text/javascript" src="/assets/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function()
+            {
+                $.ajax({
+                    url: "http://localhost:8080/index",
+                    type: "GET",
+                    success: (response)=>{
+                        alert(response)
+                    },
+                    error: function()
+                    {
+                        alert("error")
+                    }
+                })
+            })
+        </script>
+    </body>
+</html>
