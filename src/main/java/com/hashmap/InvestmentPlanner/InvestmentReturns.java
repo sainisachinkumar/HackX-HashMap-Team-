@@ -1,7 +1,8 @@
 package com.hashmap.InvestmentPlanner;
 
 public class InvestmentReturns {
-	int investmentTypeId;
+	int planId;
+	//int investmentTypeId;
 	int year;
 	int yearNumber;
 	double goldReturnsPercentage;
@@ -16,12 +17,15 @@ public class InvestmentReturns {
 	double mfReturnsAmount;
 	double fdReturnsPercentage;
 	double fdReturnsAmount;
-	public int getInvestmentTypeId() {
-		return investmentTypeId;
-	}
-	public void setInvestmentTypeId(int investmentTypeId) {
-		this.investmentTypeId = investmentTypeId;
-	}
+	//double totalReturns;
+	
+	
+//	public int getInvestmentTypeId() {
+//		return investmentTypeId;
+//	}
+//	public void setInvestmentTypeId(int investmentTypeId) {
+//		this.investmentTypeId = investmentTypeId;
+//	}
 	public int getYear() {
 		return year;
 	}
@@ -40,72 +44,84 @@ public class InvestmentReturns {
 	public void setGoldReturnsPercentage(double goldReturnsPercentage) {
 		this.goldReturnsPercentage = goldReturnsPercentage;
 	}
-	public double getGoldReturnsAmount() {
-		return goldReturnsAmount;
-	}
-	public void setGoldReturnsAmount(double goldReturnsAmount) {
-		this.goldReturnsAmount = goldReturnsAmount;
-	}
+//	public double getGoldReturnsAmount() {
+//		return goldReturnsAmount;
+//	}
+//	public void setGoldReturnsAmount(double goldReturnsAmount) {
+//		this.goldReturnsAmount = goldReturnsAmount;
+//	}
 	public double getPropertyReturnsPercentage() {
 		return propertyReturnsPercentage;
 	}
 	public void setPropertyReturnsPercentage(double propertyReturnsPercentage) {
 		this.propertyReturnsPercentage = propertyReturnsPercentage;
 	}
-	public double getPropertyReutrnsAmount() {
-		return propertyReutrnsAmount;
-	}
-	public void setPropertyReutrnsAmount(double propertyReutrnsAmount) {
-		this.propertyReutrnsAmount = propertyReutrnsAmount;
-	}
+//	public double getPropertyReutrnsAmount() {
+//		return propertyReutrnsAmount;
+//	}
+//	public void setPropertyReutrnsAmount(double propertyReutrnsAmount) {
+//		this.propertyReutrnsAmount = propertyReutrnsAmount;
+//	}
 	public double getNiftyReturnsPercentage() {
 		return niftyReturnsPercentage;
 	}
 	public void setNiftyReturnsPercentage(double niftyReturnsPercentage) {
 		this.niftyReturnsPercentage = niftyReturnsPercentage;
 	}
-	public double getNiftyReturnsAmount() {
-		return niftyReturnsAmount;
-	}
-	public void setNiftyReturnsAmount(double niftyReturnsAmount) {
-		this.niftyReturnsAmount = niftyReturnsAmount;
-	}
+//	public double getNiftyReturnsAmount() {
+//		return niftyReturnsAmount;
+//	}
+//	public void setNiftyReturnsAmount(double niftyReturnsAmount) {
+//		this.niftyReturnsAmount = niftyReturnsAmount;
+//	}
 	public double getPpfReturnsPercentage() {
 		return ppfReturnsPercentage;
 	}
 	public void setPpfReturnsPercentage(double ppfReturnsPercentage) {
 		this.ppfReturnsPercentage = ppfReturnsPercentage;
 	}
-	public double getPpfReturnsAmount() {
-		return ppfReturnsAmount;
-	}
-	public void setPpfReturnsAmount(double ppfReturnsAmount) {
-		this.ppfReturnsAmount = ppfReturnsAmount;
-	}
+//	public double getPpfReturnsAmount() {
+//		return ppfReturnsAmount;
+//	}
+//	public void setPpfReturnsAmount(double ppfReturnsAmount) {
+//		this.ppfReturnsAmount = ppfReturnsAmount;
+//	}
 	public double getMfReturnsPercentage() {
 		return mfReturnsPercentage;
 	}
 	public void setMfReturnsPercentage(double mfReturnsPercentage) {
 		this.mfReturnsPercentage = mfReturnsPercentage;
 	}
-	public double getMfReturnsAmount() {
-		return mfReturnsAmount;
-	}
-	public void setMfReturnsAmount(double mfReturnsAmount) {
-		this.mfReturnsAmount = mfReturnsAmount;
-	}
+//	public double getMfReturnsAmount() {
+//		return mfReturnsAmount;
+//	}
+//	public void setMfReturnsAmount(double mfReturnsAmount) {
+//		this.mfReturnsAmount = mfReturnsAmount;
+//	}
 	public double getFdReturnsPercentage() {
 		return fdReturnsPercentage;
 	}
 	public void setFdReturnsPercentage(double fdReturnsPercentage) {
 		this.fdReturnsPercentage = fdReturnsPercentage;
 	}
-	public double getFdReturnsAmount() {
-		return fdReturnsAmount;
+//	public double getFdReturnsAmount() {
+//		return fdReturnsAmount;
+//	}
+//	public void setFdReturnsAmount(double fdReturnsAmount) {
+//		this.fdReturnsAmount = fdReturnsAmount;
+//	}
+	public int getPlanId() {
+		return planId;
 	}
-	public void setFdReturnsAmount(double fdReturnsAmount) {
-		this.fdReturnsAmount = fdReturnsAmount;
+	public void setPlanId(int planId) {
+		this.planId = planId;
 	}
+//	public double getTotalReturns() {
+//		return totalReturns;
+//	}
+//	public void setTotalReturns(double totalReturns) {
+//		this.totalReturns = totalReturns;
+//	}
 	
 	
 }
