@@ -31,7 +31,7 @@ public class HelloController {
 		Plan p = new Plan();
 		p.fdInvestPercentage = saveDto.getFdInvestPercentage();
 		p.goldInvestPercentage = saveDto.getGoldInvestPercentage();
-		p.mfInvestAmount = saveDto.getMfInvestPercentage();
+		p.mfInvestPercentage = saveDto.getMfInvestPercentage();
 		p.niftyInvestPercentage = saveDto.getNiftyInvestPercentage();
 		p.ppfInvestPercentage = saveDto.getPpfInvestPercentage();
 		p.propertyInvestPercentage = saveDto.getPropertyInvestPercentage();
@@ -74,5 +74,12 @@ public class HelloController {
 		}
 		List<InvestmentReturns> r =  p.calculateReturns();
 		return r;
+	}
+	
+	@CrossOrigin(origins = "*")
+	@GetMapping("/getInvestmentRisks")
+	public InvestmentRisks getInvestmentRisks()
+	{
+		return new InvestmentRisks();
 	}
 }
