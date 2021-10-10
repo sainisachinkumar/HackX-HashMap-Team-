@@ -7,23 +7,148 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script>
       function validate() {
-          var mfpercent = document.forms["newplan"]["mutualfunds"].value;
-          var stkpercent = document.forms["newplan"]["stocks"].value;
-          var goldpercent = document.forms["newplan"]["gold"].value;
-          var fdpercent = document.forms["newplan"]["fd"].value;
-          var realpercent = document.forms["newplan"]["realestate"].value;
+          const mfpercent = parseInt(document.forms["newplan"]["mfInvestPercentage"].value) ||0;
+          const stkpercent = parseInt(document.forms["newplan"]["niftyInvestPercentage"].value) ||0;
+          const goldpercent = parseInt(document.forms["newplan"]["goldInvestPercentage"].value) ||0;
+          const fdpercent = parseInt(document.forms["newplan"]["fdInvestPercentage"].value) ||0;
+          const realpercent = parseInt(document.forms["newplan"]["propertyInvestPercentage"].value) ||0;
+          const ppfpercent =  parseInt(document.forms["newplan"]["ppfInvestPercentage"].value) ||0;
 
-          var sum = mfpercent+stkpercent+goldpercent+fdpercent+realpercent;
-          if( sum!=100){
+
+          const sum = mfpercent+stkpercent+goldpercent+fdpercent+realpercent+ppfpercent;
+          if( parseInt(sum)!=100){
               console.log(sum);
-              alert("total percent  should be 100");
+              alert("total percent should be 100");
               return false;
           }
+        document.getElementById("analysis").style.display="block";
           return true;
 
-      }
+        }
+
+            // Load the Visualization API and the controls package.
+        google.charts.load('current', {'packages':['corechart', 'controls']});
+
+        // Set a callback to run when the Google Visualization API is loaded.
+        google.charts.setOnLoadCallback(drawDashboard);
+
+        // Callback that creates and populates a data table,
+        // instantiates a dashboard, a range slider and a pie chart,
+        // passes in the data and draws it.
+        function drawDashboard() {
+
+        // Create our data table.
+        var data = google.visualization.arrayToDataTable([
+            ['No of Years', 'Year', 'FD', 'MF', 'PPF', 'Nifty', 'Property', 'Gold'],
+            [1 , 2022, 7, 9, 8, 10, 8, 8],
+            [2 , 2023, 14, 18, 15, 20, 10, 10],
+            [3 , 2024, 21, 25, 24, 25, 18, 20],
+            [4 , 2025, 27, 36, 36, 35, 24, 25],
+            [5 , 2026, 35, 46, 40, 40, 39, 42],
+            [6 , 2027, 42, 54, 45, 55, 48, 45]
+        ]);
+        var risk_data = google.visualization.arrayToDataTable([
+            ['Type', 'Risk'],
+            ['FD' , 2],
+            ['MF' , 4],
+            ['PPF' , 2],
+            ['Nifty' , 4],
+            ['Property' , 3],
+            ['Gold' , 3]
+        ]);
+        /*var allocation_data = google.visualization.arrayToDataTable([
+            ['Type', 'Allocation'],
+            ['FD' , 10],
+            ['MF' , 25],
+            ['PPF' , 15],
+            ['Nifty' , 20],
+            ['Property' , 15],
+            ['Gold' , 15]
+        ]);*/
+
+        // Create a dashboard.
+        var dashboard = new google.visualization.Dashboard(
+            document.getElementById('dashboard_div'));
+
+        // Create a range slider, passing some options
+        var timeRangeSlider = new google.visualization.ControlWrapper({
+            'controlType': 'NumberRangeFilter',
+            'containerId': 'time_filter_div',
+            'options': {
+            'filterColumnLabel': 'No of Years'
+            }
+        });
+        /*var riskRangeSlider = new google.visualization.ControlWrapper({
+            'controlType': 'NumberRangeFilter',
+            'containerId': 'risk_filter_div',
+            'options': {
+            'filterColumnLabel': 'Donuts eaten'
+            }
+        });*/
+
+        // Create a pie chart, passing some options
+        var allocationPieChart = new google.visualization.ChartWrapper({
+            'chartType': 'PieChart',
+            'containerId': 'allocation_chart_div',
+            'options': {
+            'width': 300,
+            'height': 300,
+            'pieSliceText': 'value',
+            'legend': 'right',
+            'title': 'Allocation'
+            },
+            dataTable: [['Type', 'Allocation'],
+            ['FD' , 10],
+            ['MF' , 25],
+            ['PPF' , 15],
+            ['Nifty' , 20],
+            ['Property' , 15],
+            ['Gold' , 15]],
+        });
+        var resultPieChart = new google.visualization.ChartWrapper({
+            'chartType': 'PieChart',
+            'containerId': 'result_chart_div',
+            'options': {
+            'width': 300,
+            'height': 300,
+            'pieSliceText': 'value',
+            'legend': 'right',
+            'title': 'Result'
+            },
+            dataTable: [['Type', 'Result'],
+            ['FD' , 10],
+            ['MF' , 20],
+            ['PPF' , 15],
+            ['Nifty' , 30],
+            ['Property' , 10],
+            ['Gold' , 20]],
+        });
+        var resultLineChart = new google.visualization.ChartWrapper({
+            'chartType': 'LineChart',
+            'containerId': 'line_chart_div',
+            'options': {
+            'width': 300,
+            'height': 300,
+            'pieSliceText': 'value',
+            'legend': 'right',
+            'title': 'Growth'
+            },
+            'view': {'columns': [1, 2, 3, 4, 5, 6, 7]}
+        });
+
+        // Establish dependencies, declaring that 'filter' drives 'pieChart',
+        // so that the pie chart will only display entries that are let through
+        // given the chosen slider range.
+        dashboard.bind(timeRangeSlider, resultLineChart);
+        allocationPieChart.draw();
+        resultPieChart.draw();
+
+        // Draw the dashboard.
+        dashboard.draw(data);
+        }
   </script>
   <style>
     /* Remove the navbar's default margin-bottom and rounded borders */ 
@@ -73,6 +198,7 @@
     form
     {
     text-align: center;
+    align-items: center;
  
     }
 
@@ -117,7 +243,8 @@
 
     </div>
     <div class="col-sm-8 text-left"> 
-      <h1>New Plan</h1>
+      <div id="new_plan"> 
+        <h1>New Plan</h1>
 
       <form name="newplan">
         <label for="amount">Investment Amount:</label>
@@ -126,22 +253,22 @@
         <label for="mutualfunds">Mutual Funds  :</label>
         <input type="number" id="mutualfunds" name="mutualfunds" min="1" max="100">&#37<br>
 
-        <label for="stocks">Stock Market:  </label>
-        <input type="number" id="stocks" name="stocks" min="1" max="100">&#37<br>
+            <label for="niftyInvestPercentage">Stock Market:  </label>
+            <input type="number" id="niftyInvestPercentage" name="niftyInvestPercentage" min="1" max="100">&#37<br>
 
-        <label for="gold">Gold Investment:  </label>
-        <input type="number" id="gold" name="gold" min="1" max="100">&#37<br>
+            <label for="goldInvestPercentage">Gold Investment:  </label>
+            <input type="number" id="goldInvestPercentage" name="goldInvestPercentage" min="1" max="100">&#37<br>
 
-        <label for="fd">Fixed Deposits:  </label>
-        <input type="number" id="fd" name="fd" min="1" max="100">&#37<br>
+            <label for="fdInvestPercentage">Fixed Deposits:  </label>
+            <input type="number" id="fdInvestPercentage" name="fdInvestPercentage" min="1" max="100">&#37<br>
 
-        <label for="fd">PPF:  </label>
-        <input type="number" id="ppf" name="ppf" min="1" max="100">&#37<br>
+            <label for="fd">PPF:  </label>
+            <input type="number" id="ppf" name="ppf" min="1" max="100">&#37<br>
 
-        <label for="realestate">Real estate:  </label>
-        <input type="number" id="realestate" name="realestate" min="1" max="100">&#37<br>
+            <label for="realestate">Real estate:  </label>
+            <input type="number" id="realestate" name="realestate" min="1" max="100">&#37<br>
 
-        <input type="button" onclick="savePlan()" value="Submit">
+            <input type="button" onclick="savePlan()" value="Submit">
       </form>
     </div>
 	

@@ -7,6 +7,74 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+
+     $(document).ready(function () {
+
+        var resultData = [
+			{
+				"planid": 1,
+				"year": 2021,
+				"yearNumber": 1,
+				"goldReturnsPercentage": 10,
+				"propertyReturnsPercentage": 7,
+				"niftyReturnsPercentage": 12,
+				"ppfReturnsPercentage": 8,
+				"mfReturnsPercentage": 9,
+				"fdReturnsPercentage": 7
+			},
+			{
+				"planid": 2,
+				"year": 2022,
+				"yearNumber": 2,
+				"goldReturnsPercentage": 20,
+				"propertyReturnsPercentage": 8,
+				"niftyReturnsPercentage": 15,
+				"ppfReturnsPercentage": 16,
+				"mfReturnsPercentage": 18,
+				"fdReturnsPercentage": 14
+			},
+			{
+				"planid": 3,
+				"year": 2023,
+				"yearNumber": 3,
+				"goldReturnsPercentage": 25,
+				"propertyReturnsPercentage": 18,
+				"niftyReturnsPercentage": 25,
+				"ppfReturnsPercentage": 24,
+				"mfReturnsPercentage": 25,
+				"fdReturnsPercentage": 21
+			},
+			{
+				"planid": 4,
+				"year": 2024,
+				"yearNumber": 4,
+				"goldReturnsPercentage": 35,
+				"propertyReturnsPercentage": 22,
+				"niftyReturnsPercentage": 30,
+				"ppfReturnsPercentage": 32,
+				"mfReturnsPercentage": 31,
+				"fdReturnsPercentage": 28
+			}
+			];
+                var trHTML = '';
+        $.each(resultData, function (i, o){
+            trHTML += '<tr><td>' + o.planid +
+                    '</td><td>' + o.year +
+                    '</td><td>' + o.yearNumber +
+                    '</td><td>' + o.goldReturnsPercentage +
+                    '</td><td>' + o.propertyReturnsPercentage +
+                    '</td><td>' + o.niftyReturnsPercentage +
+                    '</td><td>' + o.ppfReturnsPercentage +
+                    '</td><td>' + o.mfReturnsPercentage +
+                    '</td><td>' + o.fdReturnsPercentage +
+                    '</td></tr>';
+        });
+        $('#plans_table').append(trHTML);
+    });
+
+
+  </script>
   <style>
     /* Remove the navbar's default margin-bottom and rounded borders */ 
     .navbar {
@@ -82,13 +150,27 @@
     <div class="col-sm-2 sidenav">
 
     </div>
-    <div class="col-sm-8 text-left"> 
+    <div class="col-sm-8 text-left dataTable_wrapper"> 
       <h1>My Plans</h1>
 
       <div id="plans-panel">
 
       </div>
 	  
+
+      <table class='table table-striped table-bordered table-hover' id='plans_table'>
+        <tr class='odd gradeX'>
+            <th>Plan ID</th>
+            <th>Year</th>
+            <th>No.of Years</th>
+            <th>Gold returns</th>
+            <th>Real estate returs</th>
+            <th>Nifty returns</th>
+            <th>PPF returns</th>
+            <th>MF returns</th>
+            <th>FD Returns</th>
+        </tr>
+    </table>
     </div>
 	
     <div class="col-sm-2 sidenav">
