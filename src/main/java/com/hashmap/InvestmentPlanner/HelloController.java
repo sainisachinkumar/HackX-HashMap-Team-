@@ -66,7 +66,7 @@ public class HelloController {
 	
 	//@CrossOrigin(origins = "*")
 	@GetMapping("/getReturnForPlan")
-	public List<InvestmentReturns> getReturnForPlan(@RequestParam("id") Optional<Integer> id)
+	public PlanReturnDto getReturnForPlan(@RequestParam("id") Optional<Integer> id)
 	{
 		int planId = id.get();
 		Plan p = null;
@@ -77,8 +77,17 @@ public class HelloController {
 				p = plans.get(i);
 			}
 		}
-		List<InvestmentReturns> r =  p.calculateReturns();
-		return r;
+		
+		PlanReturnDto plaR = new PlanReturnDto();
+		plaR.goldInvestPercentage = p.goldInvestPercentage;
+		plaR.fdInvestPercentage = p.fdInvestPercentage;
+		plaR.mfInvestPercentage = p.mfInvestPercentage;
+		plaR.niftyInvestPercentage = p.niftyInvestPercentage;
+		plaR.propertyInvestPercentage = p.propertyInvestPercentage;
+		plaR.fdInvestPercentage = p.fdInvestPercentage;
+		
+		plaR.returns =  p.calculateReturns();
+		return plaR;
 	}
 	
 	//@CrossOrigin(origins = "*")
