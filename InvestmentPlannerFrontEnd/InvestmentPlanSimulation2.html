@@ -85,18 +85,17 @@
     </div>
     
     <div>
-        <div id="dashboard_div">
+        <div id="dashboard_div" align="center" >
             <!--Divs that will hold each control and chart-->
-            <div id="investment_types_selector_div"></div>
+            <div style="float: left;  width: 40%">
             <div id="allocation_chart_div"></div>
             <div id="risk_gauge_div"></div>
-
-            <br>
-            <br>
-            <br>
-            <div id="time_filter_div"></div>
-            <div id="result_chart_div"></div>
-            <div id="line_chart_div"></div>
+            </div>
+            <div style="float: left; width: 40%">
+            <div   id="result_chart_div"></div>
+            <div   id="time_filter_div"></div>
+            <div   id="line_chart_div"></div>
+            </div>
           </div>
       
     </div>
@@ -133,6 +132,7 @@
         } 
 
 		var resultData = []
+        var inputData = {}
 
 	  $(document).ready(function()
 	  {
@@ -145,8 +145,25 @@
 
 		$.ajax(settings).done(function (response) {
 			debugger;
-			resultData = response
-
+			resultData = response.returns
+            // inputData = {
+            //     "totalAmount":response.totalAmount,
+            //     "goldInvestPercentage": response.goldInvestPercentage,
+            //     "propertyInvestPercentage":response.propertyInvestPercentage,
+            //     "niftyInvestPercentage":response.niftyInvestPercentage,
+            //     "ppfInvestPercentage":response.ppfInvestPercentage,
+            //     "mfInvestPercentage":response.mfInvestPercentage,
+            //     "fdInvestPercentage":response.fdInvestPercentage
+            // };
+            inputData = {
+            "totalAmount":12000,
+            "goldInvestPercentage": 10,
+            "propertyInvestPercentage":15,
+            "niftyInvestPercentage":45,
+            "ppfInvestPercentage":20,
+            "mfInvestPercentage":5,
+            "fdInvestPercentage":5
+        };
 			 // Load the Visualization API and the controls package.
 			 google.charts.load('current', {'packages':['corechart', 'controls']});
 
@@ -162,234 +179,195 @@
 
       function drawDashboard() {
 
-		//input data
-		var inputData = {
-			"totalAmount":12000,
-			"goldInvestPercentage": 10,
-			"propertyInvestPercentage":15,
-			"niftyInvestPercentage":45,
-			"ppfInvestPercentage":20,
-			"mfInvestPercentage":5,
-			"fdInvestPercentage":5
-		};
-		var riskData = {//scale 1 to 10
-			"goldRiskWeightage": 4,
-			"propertyRiskWeightage":5,
-			"niftyRiskWeightage":7,
-			"ppfRiskWeightage":2,
-			"mfRiskWeightage":6,
-			"fdRiskWeightage":3
-		};
-		//result data
-		// var resultData = [
-		// 	{
-		// 		"planid": 1,
-		// 		"year": 2021,
-		// 		"yearNumber": 1,
-		// 		"goldReturnsPercentage": 0,
-		// 		"propertyReturnsPercentage": 0,
-		// 		"niftyReturnsPercentage": 0,
-		// 		"ppfReturnsPercentage": 0,
-		// 		"mfReturnsPercentage": 0,
-		// 		"fdReturnsPercentage": 0
-		// 	},
-		// 	{
-		// 		"planid": 1,
-		// 		"year": 2022,
-		// 		"yearNumber": 1,
-		// 		"goldReturnsPercentage": 10,
-		// 		"propertyReturnsPercentage": 7,
-		// 		"niftyReturnsPercentage": 12,
-		// 		"ppfReturnsPercentage": 8,
-		// 		"mfReturnsPercentage": 9,
-		// 		"fdReturnsPercentage": 7
-		// 	},
-		// 	{
-		// 		"planid": 1,
-		// 		"year": 2023,
-		// 		"yearNumber": 2,
-		// 		"goldReturnsPercentage": 20,
-		// 		"propertyReturnsPercentage": 8,
-		// 		"niftyReturnsPercentage": 15,
-		// 		"ppfReturnsPercentage": 16,
-		// 		"mfReturnsPercentage": 18,
-		// 		"fdReturnsPercentage": 14
-		// 	},
-		// 	{
-		// 		"planid": 1,
-		// 		"year": 2024,
-		// 		"yearNumber": 3,
-		// 		"goldReturnsPercentage": 25,
-		// 		"propertyReturnsPercentage": 18,
-		// 		"niftyReturnsPercentage": 25,
-		// 		"ppfReturnsPercentage": 24,
-		// 		"mfReturnsPercentage": 25,
-		// 		"fdReturnsPercentage": 21
-		// 	},
-		// 	{
-		// 		"planid": 1,
-		// 		"year": 2025,
-		// 		"yearNumber": 4,
-		// 		"goldReturnsPercentage": 35,
-		// 		"propertyReturnsPercentage": 22,
-		// 		"niftyReturnsPercentage": 30,
-		// 		"ppfReturnsPercentage": 32,
-		// 		"mfReturnsPercentage": 31,
-		// 		"fdReturnsPercentage": 28
-		// 	}
-		// 	];
+//input data
+// var inputData = {
+//     "totalAmount":12000,
+//     "goldInvestPercentage": 10,
+//     "propertyInvestPercentage":15,
+//     "niftyInvestPercentage":45,
+//     "ppfInvestPercentage":20,
+//     "mfInvestPercentage":5,
+//     "fdInvestPercentage":5
+// };
+
+var riskData = {//scale 1 to 10
+    "goldRiskWeightage": 4,
+    "propertyRiskWeightage":5,
+    "niftyRiskWeightage":7,
+    "ppfRiskWeightage":2,
+    "mfRiskWeightage":6,
+    "fdRiskWeightage":3
+};
+//result data
 
 
-        // Create our data table.
-		var data = new google.visualization.DataTable();
-		
-		data.addColumn('number','No of Years');
-		data.addColumn('number', 'Year');
-		data.addColumn('number', 'FD');
-		data.addColumn('number','MF');
-		data.addColumn('number', 'PPF');
-		data.addColumn('number', 'Nifty');
-		data.addColumn('number','Property');
-		data.addColumn('number', 'Gold');
-		
-		data.addRows(resultData.length);
-		for (var i = 0; i < resultData.length; i++) {
-			data.setValue(i, 0, resultData[i].yearNumber);
-			data.setValue(i, 1, resultData[i].year);
-			data.setValue(i, 2, inputData.totalAmount * inputData.fdInvestPercentage * (100+resultData[i].fdReturnsPercentage) / 10000);
-			data.setValue(i, 3, inputData.totalAmount * inputData.mfInvestPercentage * (100+resultData[i].mfReturnsPercentage) / 10000);
-			data.setValue(i, 4, inputData.totalAmount * inputData.ppfInvestPercentage * (100+resultData[i].ppfReturnsPercentage) / 10000);
-			data.setValue(i, 5, inputData.totalAmount * inputData.niftyInvestPercentage * (100+resultData[i].niftyReturnsPercentage) / 10000);
-			data.setValue(i, 6, inputData.totalAmount * inputData.propertyInvestPercentage * (100+resultData[i].propertyReturnsPercentage) / 10000);
-			data.setValue(i, 7, inputData.totalAmount * inputData.goldInvestPercentage * (100+resultData[i].goldReturnsPercentage) / 10000);
-		}
-		
-        /*var data = google.visualization.arrayToDataTable([
-          ['No of Years', 'Year', 'FD', 'MF', 'PPF', 'Nifty', 'Property', 'Gold'],
-          [1 , 2022, 7, 9, 8, 10, 8, 8],
-          [2 , 2023, 14, 18, 15, 20, 10, 10],
-          [3 , 2024, 21, 25, 24, 25, 18, 20],
-          [4 , 2025, 27, 36, 36, 35, 24, 25],
-          [5 , 2026, 35, 46, 40, 40, 39, 42],
-          [6 , 2027, 42, 54, 45, 55, 48, 45]
-        ]);*/
-		/*var allocation_data = google.visualization.arrayToDataTable([
-          ['Type', 'Allocation'],
-          ['FD' , 10],
-          ['MF' , 25],
-          ['PPF' , 15],
-          ['Nifty' , 20],
-		  ['Property' , 15],
-		  ['Gold' , 15]
-        ]);*/
+// Create our data table.
+var data = new google.visualization.DataTable();
 
-        // Create a dashboard.
-        var dashboard = new google.visualization.Dashboard(
-            document.getElementById('dashboard_div'));
+data.addColumn('number','No of Years');
+data.addColumn('string', 'Year');
+data.addColumn('number', 'FD');
+data.addColumn('number','MF');
+data.addColumn('number', 'PPF');
+data.addColumn('number', 'Nifty');
+data.addColumn('number','Property');
+data.addColumn('number', 'Gold');
 
-        var timeRangeSlider = new google.visualization.ControlWrapper({
-          'controlType': 'NumberRangeFilter',
-          'containerId': 'time_filter_div',
-          'options': {
-            'filterColumnLabel': 'No of Years'
-          }
-        });
-		
+data.addRows(resultData.length);
+for (var i = 0; i < resultData.length; i++) {
+    data.setValue(i, 0, resultData[i].yearNumber);
+    data.setValue(i, 1, ""+resultData[i].year);
+    data.setValue(i, 2, inputData.totalAmount * inputData.fdInvestPercentage * (100+resultData[i].fdReturnsPercentage) / 10000);
+    data.setValue(i, 3, inputData.totalAmount * inputData.mfInvestPercentage * (100+resultData[i].mfReturnsPercentage) / 10000);
+    data.setValue(i, 4, inputData.totalAmount * inputData.ppfInvestPercentage * (100+resultData[i].ppfReturnsPercentage) / 10000);
+    data.setValue(i, 5, inputData.totalAmount * inputData.niftyInvestPercentage * (100+resultData[i].niftyReturnsPercentage) / 10000);
+    data.setValue(i, 6, inputData.totalAmount * inputData.propertyInvestPercentage * (100+resultData[i].propertyReturnsPercentage) / 10000);
+    data.setValue(i, 7, inputData.totalAmount * inputData.goldInvestPercentage * (100+resultData[i].goldReturnsPercentage) / 10000);
+}
 
-        // Create a pie chart, passing some options
-        var allocationPieChart = new google.visualization.ChartWrapper({
-          'chartType': 'PieChart',
-          'containerId': 'allocation_chart_div',
-          'options': {
-            'width': 400,
-            'height': 400,
-            'pieSliceText': 'value',
-            'legend': 'right',
-			'title': 'Allocation'
-          },
-		  dataTable: [['Type', 'Allocation'],
-          ['FD' , inputData.totalAmount * inputData.fdInvestPercentage / 100],
-          ['MF' , inputData.totalAmount * inputData.mfInvestPercentage / 100],
-          ['PPF' , inputData.totalAmount * inputData.ppfInvestPercentage / 100],
-          ['Nifty' , inputData.totalAmount * inputData.niftyInvestPercentage / 100],
-		  ['Property' , inputData.totalAmount * inputData.propertyInvestPercentage / 100],
-		  ['Gold' , inputData.totalAmount * inputData.goldInvestPercentage / 100]],
-        });
-		
-		var resultPieChart = new google.visualization.ChartWrapper({
-          'chartType': 'PieChart',
-          'containerId': 'result_chart_div',
-          'options': {
-            'width': 400,
-            'height': 400,
-            'pieSliceText': 'value',
-            'legend': 'right',
-			'title': 'Result'
-          },
-		  dataTable: [['Type', 'Result'],
-          ['FD' , inputData.totalAmount * inputData.fdInvestPercentage * (100+resultData[resultData.length-1].fdReturnsPercentage) / 10000],
-          ['MF' , inputData.totalAmount * inputData.mfInvestPercentage * (100+resultData[resultData.length-1].mfReturnsPercentage) / 10000],
-          ['PPF' , inputData.totalAmount * inputData.ppfInvestPercentage * (100+resultData[resultData.length-1].ppfReturnsPercentage) / 10000],
-          ['Nifty' , inputData.totalAmount * inputData.niftyInvestPercentage * (100+resultData[resultData.length-1].niftyReturnsPercentage) / 10000],
-		  ['Property' , inputData.totalAmount * inputData.propertyInvestPercentage * (100+resultData[resultData.length-1].propertyReturnsPercentage) / 10000],
-		  ['Gold' , inputData.totalAmount * inputData.goldInvestPercentage * (100+resultData[resultData.length-1].goldReturnsPercentage) / 10000]],
-        });
-		google.visualization.events.addListener(timeRangeSlider, 'statechange', function () {
-      debugger;
-		  var state = timeRangeSlider.getState();
-		  resultPieChart.dataTable = [['Type', 'Result'],
-          ['FD' , inputData.totalAmount * inputData.fdInvestPercentage * (100+resultData[state.range.end-1].fdReturnsPercentage) / 10000],
-          ['MF' , inputData.totalAmount * inputData.mfInvestPercentage * (100+resultData[state.range.end-1].mfReturnsPercentage) / 10000],
-          ['PPF' , inputData.totalAmount * inputData.ppfInvestPercentage * (100+resultData[state.range.end-1].ppfReturnsPercentage) / 10000],
-          ['Nifty' , inputData.totalAmount * inputData.niftyInvestPercentage * (100+resultData[state.range.end-1].niftyReturnsPercentage) / 10000],
-		  ['Property' , inputData.totalAmount * inputData.propertyInvestPercentage * (100+resultData[state.range.end-1].propertyReturnsPercentage) / 10000],
-		  ['Gold' , inputData.totalAmount * inputData.goldInvestPercentage * (100+resultData[state.range.end-1].goldReturnsPercentage) / 10000]];
-		  
-		 
-		  resultPieChart.draw();
-		});
+/*var data = google.visualization.arrayToDataTable([
+  ['No of Years', 'Year', 'FD', 'MF', 'PPF', 'Nifty', 'Property', 'Gold'],
+  [1 , 2022, 7, 9, 8, 10, 8, 8],
+  [2 , 2023, 14, 18, 15, 20, 10, 10],
+  [3 , 2024, 21, 25, 24, 25, 18, 20],
+  [4 , 2025, 27, 36, 36, 35, 24, 25],
+  [5 , 2026, 35, 46, 40, 40, 39, 42],
+  [6 , 2027, 42, 54, 45, 55, 48, 45]
+]);*/
+/*var allocation_data = google.visualization.arrayToDataTable([
+  ['Type', 'Allocation'],
+  ['FD' , 10],
+  ['MF' , 25],
+  ['PPF' , 15],
+  ['Nifty' , 20],
+  ['Property' , 15],
+  ['Gold' , 15]
+]);*/
 
-		var riskGaugeChart = new google.visualization.ChartWrapper({
-          'chartType': 'Gauge',
-          'containerId': 'risk_gauge_div',
-          'options': {
-            'width': 200,
-            'height': 200,
-            'pieSliceText': 'value',
-            'legend': 'right',
-			'title': 'Risk',
-			'redFrom': 80, 'redTo': 100,
-			'yellowFrom':50, 'yellowTo': 80,
-			'minorTicks': 5
-          },
-		  dataTable: [['Label', 'Value'],
-          ['Risk' , 60]]
-        });
-		var resultLineChart = new google.visualization.ChartWrapper({
-          'chartType': 'LineChart',
-          'containerId': 'line_chart_div',
-          'options': {
-            'width': 600,
-            'height': 400,
-            'pieSliceText': 'value',
-            'legend': 'right',
-			'title': 'Growth'
-          },
-		  'view': {'columns': [1, 2, 3, 4, 5, 6, 7]}
-        });
+// Create a dashboard.
+var dashboard = new google.visualization.Dashboard(
+    document.getElementById('dashboard_div'));
 
-        // Establish dependencies, declaring that 'filter' drives 'pieChart',
-        // so that the pie chart will only display entries that are let through
-        // given the chosen slider range.
-        dashboard.bind(timeRangeSlider, resultLineChart);
-		allocationPieChart.draw();
-		resultPieChart.draw();
-		riskGaugeChart.draw();
-		
-        // Draw the dashboard.
-        dashboard.draw(data);
-      }
+var timeRangeSlider = new google.visualization.ControlWrapper({
+  'controlType': 'NumberRangeFilter',
+  'containerId': 'time_filter_div',
+  'options': {
+    'filterColumnLabel': 'No of Years'
+  }
+});
+
+
+// Create a pie chart, passing some options
+var allocationPieChart = new google.visualization.ChartWrapper({
+  'chartType': 'PieChart',
+  'containerId': 'allocation_chart_div',
+  'options': {
+    'width': 400,
+    'height': 300,
+    'pieSliceText': 'value',
+    'legend': 'right',
+    'title': 'Investment'
+  },
+  dataTable: [['Type', 'Allocation'],
+  ['FD' , inputData.totalAmount * inputData.fdInvestPercentage / 100],
+  ['MF' , inputData.totalAmount * inputData.mfInvestPercentage / 100],
+  ['PPF' , inputData.totalAmount * inputData.ppfInvestPercentage / 100],
+  ['Nifty' , inputData.totalAmount * inputData.niftyInvestPercentage / 100],
+  ['Property' , inputData.totalAmount * inputData.propertyInvestPercentage / 100],
+  ['Gold' , inputData.totalAmount * inputData.goldInvestPercentage / 100]],
+});
+
+var resultPieChart = new google.visualization.ChartWrapper({
+  'chartType': 'PieChart',
+  'containerId': 'result_chart_div',
+  'options': {
+    'width': 400,
+    'height': 300,
+    'pieSliceText': 'value',
+    'legend': 'right',
+    'title': 'Result'
+  },
+  dataTable: [['Type', 'Result'],
+  ['FD' , inputData.totalAmount * inputData.fdInvestPercentage * (100+resultData[resultData.length-1].fdReturnsPercentage) / 10000],
+  ['MF' , inputData.totalAmount * inputData.mfInvestPercentage * (100+resultData[resultData.length-1].mfReturnsPercentage) / 10000],
+  ['PPF' , inputData.totalAmount * inputData.ppfInvestPercentage * (100+resultData[resultData.length-1].ppfReturnsPercentage) / 10000],
+  ['Nifty' , inputData.totalAmount * inputData.niftyInvestPercentage * (100+resultData[resultData.length-1].niftyReturnsPercentage) / 10000],
+  ['Property' , inputData.totalAmount * inputData.propertyInvestPercentage * (100+resultData[resultData.length-1].propertyReturnsPercentage) / 10000],
+  ['Gold' , inputData.totalAmount * inputData.goldInvestPercentage * (100+resultData[resultData.length-1].goldReturnsPercentage) / 10000]],
+});
+google.visualization.events.addListener(timeRangeSlider, 'statechange', function () {
+  var state = timeRangeSlider.getState();
+  resultPieChart = new google.visualization.ChartWrapper({
+  'chartType': 'PieChart',
+  'containerId': 'result_chart_div',
+  'options': {
+    'width': 400,
+    'height': 300,
+    'pieSliceText': 'value',
+    'legend': 'right',
+    'title': 'Result'
+  },
+  dataTable: [['Type', 'Result'],
+  ['FD' , inputData.totalAmount * inputData.fdInvestPercentage * (100+resultData[state.highValue].fdReturnsPercentage) / 10000],
+  ['MF' , inputData.totalAmount * inputData.mfInvestPercentage * (100+resultData[state.highValue].mfReturnsPercentage) / 10000],
+  ['PPF' , inputData.totalAmount * inputData.ppfInvestPercentage * (100+resultData[state.highValue].ppfReturnsPercentage) / 10000],
+  ['Nifty' , inputData.totalAmount * inputData.niftyInvestPercentage * (100+resultData[state.highValue].niftyReturnsPercentage) / 10000],
+  ['Property' , inputData.totalAmount * inputData.propertyInvestPercentage * (100+resultData[state.highValue].propertyReturnsPercentage) / 10000],
+  ['Gold' , inputData.totalAmount * inputData.goldInvestPercentage * (100+resultData[state.highValue].goldReturnsPercentage) / 10000]]
+  });
+ 
+  resultPieChart.draw();
+});
+
+var riskGaugeChart = new google.visualization.ChartWrapper({
+  'chartType': 'Gauge',
+  'containerId': 'risk_gauge_div',
+  'options': {
+    'width': 200,
+    'height': 200,
+    'pieSliceText': 'value',
+    'legend': 'right',
+    'redFrom': 80, 'redTo': 100,
+    'yellowFrom':50, 'yellowTo': 80,
+    'minorTicks': 5
+  },
+  dataTable: [['Label', 'Value'],
+  ['Risk Meter' , (inputData.goldInvestPercentage*riskData.goldRiskWeightage + inputData.propertyInvestPercentage*riskData.propertyRiskWeightage + inputData.niftyInvestPercentage*riskData.niftyRiskWeightage + inputData.ppfInvestPercentage*riskData.ppfRiskWeightage + inputData.mfInvestPercentage*riskData.mfRiskWeightage + inputData.fdInvestPercentage*riskData.fdRiskWeightage) * 10 / (inputData.goldInvestPercentage + inputData.propertyInvestPercentage + inputData.niftyInvestPercentage + inputData.ppfInvestPercentage + inputData.mfInvestPercentage + inputData.fdInvestPercentage)]]
+});
+
+var resultLineChart = new google.visualization.ChartWrapper({
+  'chartType': 'LineChart',
+  'containerId': 'line_chart_div',
+  'options': {
+    'width': 500,
+    'height': 400,
+    'pieSliceText': 'value',
+    'legend': 'right',
+    'title': 'Growth'
+  },
+  'view': {'columns': [1, 2, 3, 4, 5, 6, 7]}
+});
+
+// Establish dependencies, declaring that 'filter' drives 'pieChart',
+// so that the pie chart will only display entries that are let through
+// given the chosen slider range.
+dashboard.bind(timeRangeSlider, resultLineChart);
+allocationPieChart.draw();
+resultPieChart.draw();
+riskGaugeChart.draw();
+
+// Draw the dashboard.
+dashboard.draw(data);
+}
     </script>
-
+<script type="text/javascript">
+    window.__be = window.__be || {};
+    window.__be.id = "6162608118ae5c0007bad6bc";
+    (function() {
+        var be = document.createElement('script'); be.type = 'text/javascript'; be.async = true;
+        be.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.chatbot.com/widget/plugin.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(be, s);
+    })();
+</script>
 </body>
 </html>

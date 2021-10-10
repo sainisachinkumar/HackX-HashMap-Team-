@@ -246,30 +246,38 @@
       <div id="new_plan"> 
         <h1>New Plan</h1>
 
-      <form name="newplan">
-        <label for="amount">Investment Amount:</label>
-        <input type="number" id="amount" name="amount" min="0">&#8377<br>
-        <h2>Percentage in each category</h2>
-        <label for="mutualfunds">Mutual Funds  :</label>
-        <input type="number" id="mutualfunds" name="mutualfunds" min="1" max="100">&#37<br>
-
-            <label for="niftyInvestPercentage">Stock Market:  </label>
-            <input type="number" id="niftyInvestPercentage" name="niftyInvestPercentage" min="1" max="100">&#37<br>
-
-            <label for="goldInvestPercentage">Gold Investment:  </label>
-            <input type="number" id="goldInvestPercentage" name="goldInvestPercentage" min="1" max="100">&#37<br>
-
-            <label for="fdInvestPercentage">Fixed Deposits:  </label>
-            <input type="number" id="fdInvestPercentage" name="fdInvestPercentage" min="1" max="100">&#37<br>
-
-            <label for="fd">PPF:  </label>
-            <input type="number" id="ppf" name="ppf" min="1" max="100">&#37<br>
-
-            <label for="realestate">Real estate:  </label>
-            <input type="number" id="realestate" name="realestate" min="1" max="100">&#37<br>
-
-            <input type="button" onclick="savePlan()" value="Submit">
-      </form>
+        <form name="newplan">
+          <label for="amount">Investment Amount:</label>
+          <input type="number" id="amount" name="amount" min="0">&#8377<br>
+          <h2>Percentage in each category</h2>
+              <table align="center">
+              <tr>
+                  <td><label for="mutualfunds">Mutual Funds  :</label></td>
+                  <td><input type="number" id="mutualfunds" name="mutualfunds" min="1" max="100">&#37<br></td>
+              </tr>
+              <tr>
+              <td><label for="niftyInvestPercentage">Stock Market:  </label> </td>
+              <td><input type="number" id="niftyInvestPercentage" name="niftyInvestPercentage" min="1" max="100" align="center">&#37<br></td>
+              </tr>
+              <tr>
+              <td><label for="goldInvestPercentage">Gold Investment:  </label></td>
+              <td><input type="number" id="goldInvestPercentage" name="goldInvestPercentage" min="1" max="100"align="center">&#37<br></td>
+              </tr>
+              <tr>
+              <td><label for="fdInvestPercentage">Fixed Deposits:  </label></td>
+              <td><input type="number" id="fdInvestPercentage" name="fdInvestPercentage" min="1" max="100" align="center">&#37<br></td>
+              </tr>
+              <tr>
+              <td><label for="fd">PPF:  </label></td>
+              <td><input type="number" id="ppf" name="ppf" min="1" max="100" align="center">&#37<br></td>
+              </tr>
+              <tr>
+              <td><label for="realestate">Real estate:  </label></td>
+              <td><input type="number" id="realestate" name="realestate" min="1" max="100" align="center">&#37<br></td>
+              </tr>
+              </table>
+              <input type="button" onclick="savePlan()" value="Submit">
+        </form>
     </div>
 	
     <div class="col-sm-2 sidenav">
@@ -311,7 +319,7 @@
   };
 
   $.ajax(settings).done(function (response) {
-    window.location.href='/InvestmentPlanSimulation.html?id='+response;
+    window.location.href='/InvestmentPlanSimulation2.html?id='+2;
   });
 
     // let totalPercent = data.goldInvestPercentage + data.propertyInvestPercentage + data.niftyInvestPercentage
@@ -323,6 +331,17 @@
     // }
 
   }
+</script>
+
+
+<script type="text/javascript">
+  window.__be = window.__be || {};
+  window.__be.id = "6162608118ae5c0007bad6bc";
+  (function() {
+      var be = document.createElement('script'); be.type = 'text/javascript'; be.async = true;
+      be.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.chatbot.com/widget/plugin.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(be, s);
+  })();
 </script>
 </body>
 </html>
