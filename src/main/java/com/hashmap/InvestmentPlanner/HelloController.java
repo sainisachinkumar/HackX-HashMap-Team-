@@ -3,6 +3,7 @@ package com.hashmap.InvestmentPlanner;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -18,13 +20,13 @@ public class HelloController {
 	public static List<Plan> plans = new ArrayList<Plan>();
 	static int planInc;
 	
-	@CrossOrigin(origins = "*")
+	//@CrossOrigin(origins = "*")
 	@GetMapping("/index")
 	public String index() {
 		return "Greetings from Spring Boot!";
 	}
 	
-	@CrossOrigin(origins = "*")
+	//@CrossOrigin(origins = "*")
 	@RequestMapping(value = "/savePlan", method = {RequestMethod.POST})
 	public Integer savePlan(@RequestBody InvestmentSaveDto saveDto)
 	{
@@ -46,25 +48,28 @@ public class HelloController {
 		return p.planId;
 	}
 	
-	@CrossOrigin(origins = "*")
+	//@CrossOrigin(origins = "*")
 	@GetMapping("/getAllPlans")
-	public HashMap<Integer, String> getAllPlans()
+	public List<PlanListDto> getAllPlans()
 	{
-		HashMap<Integer, String> plansMap = new HashMap<Integer, String>();
+		List<PlanListDto> planList = new ArrayList<PlanListDto>();
 		
 		for(int i=0; i<plans.size(); i++)
 		{
-			plansMap.put(plans.get(i).planId, plans.get(i).planName);
+			PlanListDto plan = new PlanListDto();
+			plan.setPlanId(plans.get(i).planId);
+			plan.setPlanName(plans.get(i).planName);
+			planList.add(plan);
 		}
-		return plansMap;
+		return planList;
 	}
 	
-	@CrossOrigin(origins = "*")
+	//@CrossOrigin(origins = "*")
 	@GetMapping("/getReturnForPlan")
-	public List<InvestmentReturns> getReturnForPlan()
+	public List<InvestmentReturns> getReturnForPlan(@RequestParam("id") Optional<Integer> id)
 	{
-		int planId = 1;
-		Plan p = new Plan();
+		int planId = id.get();
+		Plan p = null;
 		for(int i=0; i<plans.size(); i++)
 		{
 			if(plans.get(i).planId.equals(planId))
@@ -76,7 +81,7 @@ public class HelloController {
 		return r;
 	}
 	
-	@CrossOrigin(origins = "*")
+	//@CrossOrigin(origins = "*")
 	@GetMapping("/getInvestmentRisks")
 	public InvestmentRisks getInvestmentRisks()
 	{

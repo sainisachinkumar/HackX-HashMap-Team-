@@ -119,7 +119,7 @@
     <div class="col-sm-8 text-left"> 
       <h1>New Plan</h1>
 
-      <form name="newplan" onsubmit="return validate()" action="/action_page.php" method="POST">
+      <form name="newplan">
         <label for="amount">Investment Amount:</label>
         <input type="number" id="amount" name="amount" min="0">&#8377<br>
         <h2>Percentage in each category</h2>
@@ -135,9 +135,13 @@
         <label for="fd">Fixed Deposits:  </label>
         <input type="number" id="fd" name="fd" min="1" max="100">&#37<br>
 
+        <label for="fd">PPF:  </label>
+        <input type="number" id="ppf" name="ppf" min="1" max="100">&#37<br>
+
         <label for="realestate">Real estate:  </label>
         <input type="number" id="realestate" name="realestate" min="1" max="100">&#37<br>
-        <input type="submit" value="Submit">
+
+        <input type="button" onclick="savePlan()" value="Submit">
       </form>
     </div>
 	
@@ -157,5 +161,41 @@
   <p>Stockopoly</p>
 </footer>
 
+<script type="text/javascript" src="/assets/jquery-3.6.0.min.js"></script>
+<script>
+  function savePlan()
+  {
+    var settings = {
+    "url": "http://localhost:8080/savePlan",
+    "method": "POST",
+    "timeout": 0,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "data": JSON.stringify({
+      "totalAmount": $("#amount").val(),
+      "goldInvestPercentage": $("#gold").val(),
+      "propertyInvestPercentage": $("#realestate").val(),
+      "niftyInvestPercentage": $("#stocks").val(),
+      "ppfInvestPercentage": $("#ppf").val(),
+      "mfInvestPercentage": $("#mutualfunds").val(),
+      "fdInvestPercentage": $("#fd").val()
+    }),
+  };
+
+  $.ajax(settings).done(function (response) {
+    window.location.href='/InvestmentPlanSimulation.html?id='+response;
+  });
+
+    // let totalPercent = data.goldInvestPercentage + data.propertyInvestPercentage + data.niftyInvestPercentage
+    // + data.ppfInvestPercentage + data.mfInvestPercentage + data.fdInvestPercentage;
+
+    // if(totalPercent != 100)
+    // {
+    //   alert("Investment should add upto 100%")
+    // }
+
+  }
+</script>
 </body>
 </html>

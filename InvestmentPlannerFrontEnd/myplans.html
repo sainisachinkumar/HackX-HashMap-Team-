@@ -85,15 +85,10 @@
     <div class="col-sm-8 text-left"> 
       <h1>My Plans</h1>
 
-	  <div onclick="location.href='http://myurl.com';" class="plans" >
-		<h1>Plan1</h1>
-	  </div>
-      <div onclick="location.href='http://myurl.com';" class="plans" >
-		<h1>Plan2</h1>
-	  </div>
-      <div onclick="location.href='http://myurl.com';" class="plans" >
-		<h1>Plan3</h1>
-	  </div>
+      <div id="plans-panel">
+
+      </div>
+	  
     </div>
 	
     <div class="col-sm-2 sidenav">
@@ -111,6 +106,37 @@
 <footer class="container-fluid text-center">
   <p>Stockopoly</p>
 </footer>
+
+<script type="text/javascript" src="/assets/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function(){
+    var settings = {
+      "url": "http://localhost:8080/getAllPlans",
+      "method": "GET",
+      "timeout": 0,
+    };
+
+    $.ajax(settings).done(function (response) {
+      debugger;
+      let strHtml = "";
+      for(let i=0; i<response.length; i++)
+      {
+        let plan = response[i]
+       let ht= ' <div class="plans" onclick="redirectToPlan('+plan.planId+')">'+
+        '<h1>'+plan.planName+'</h1>';
+        '</div>';
+        strHtml = strHtml + ht
+      }
+
+      $("#plans-panel").html(strHtml)
+    });
+  })
+
+  function redirectToPlan(planId)
+  {
+    window.location.href='/InvestmentPlanSimulation.html?id='+planId;
+  }
+</script>
 
 </body>
 </html>
