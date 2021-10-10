@@ -246,12 +246,12 @@
       <div id="new_plan"> 
         <h1>New Plan</h1>
 
-        <form name="newplan" onsubmit="return validate()" method="POST" action="localhost:8080/savePlan" >
-            <label for="totalAmount">Investment Amount:</label>
-            <input type="number" id="totalAmount" name="totalAmount" min="0">&#8377<br>
-            <h2>Percentage in each category</h2>
-            <label for="mfInvestPercentage">Mutual Funds  :</label>
-            <input type="number" id="mfInvestPercentage" name="mfInvestPercentage" min="1" max="100">&#37<br>
+      <form name="newplan">
+        <label for="amount">Investment Amount:</label>
+        <input type="number" id="amount" name="amount" min="0">&#8377<br>
+        <h2>Percentage in each category</h2>
+        <label for="mutualfunds">Mutual Funds  :</label>
+        <input type="number" id="mutualfunds" name="mutualfunds" min="1" max="100">&#37<br>
 
             <label for="niftyInvestPercentage">Stock Market:  </label>
             <input type="number" id="niftyInvestPercentage" name="niftyInvestPercentage" min="1" max="100">&#37<br>
@@ -262,26 +262,14 @@
             <label for="fdInvestPercentage">Fixed Deposits:  </label>
             <input type="number" id="fdInvestPercentage" name="fdInvestPercentage" min="1" max="100">&#37<br>
 
-            <label for="propertyInvestPercentage">Real estate:  </label>
-            <input type="number" id="propertyInvestPercentage" name="propertyInvestPercentage" min="1" max="100">&#37<br>
+            <label for="fd">PPF:  </label>
+            <input type="number" id="ppf" name="ppf" min="1" max="100">&#37<br>
 
-            <label for="ppfInvestPercentage">PPF:  </label>
-            <input type="number" id="ppfInvestPercentage" name="ppfInvestPercentage" min="1" max="100">&#37<br>
-            <input type="button" value="Get Returns" onclick="validate()">
+            <label for="realestate">Real estate:  </label>
+            <input type="number" id="realestate" name="realestate" min="1" max="100">&#37<br>
 
-            <input type="submit" value="submit">
-        </form>
-      </div>
-      <div id="analysis" style="display: none;">
-        <div id="dashboard_div" >
-            <!--Divs that will hold each control and chart-->
-            <div id="time_filter_div"></div>
-            <div id="risk_filter_div"></div>
-            <div id="allocation_chart_div"></div>
-            <div id="result_chart_div"></div>
-            <div id="line_chart_div"></div>
-        </div>
-      </div>
+            <input type="button" onclick="savePlan()" value="Submit">
+      </form>
     </div>
 	
     <div class="col-sm-2 sidenav">
@@ -300,5 +288,41 @@
   <p>Stockopoly</p>
 </footer>
 
+<script type="text/javascript" src="/assets/jquery-3.6.0.min.js"></script>
+<script>
+  function savePlan()
+  {
+    var settings = {
+    "url": "http://localhost:8080/savePlan",
+    "method": "POST",
+    "timeout": 0,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "data": JSON.stringify({
+      "totalAmount": $("#amount").val(),
+      "goldInvestPercentage": $("#gold").val(),
+      "propertyInvestPercentage": $("#realestate").val(),
+      "niftyInvestPercentage": $("#stocks").val(),
+      "ppfInvestPercentage": $("#ppf").val(),
+      "mfInvestPercentage": $("#mutualfunds").val(),
+      "fdInvestPercentage": $("#fd").val()
+    }),
+  };
+
+  $.ajax(settings).done(function (response) {
+    window.location.href='/InvestmentPlanSimulation.html?id='+response;
+  });
+
+    // let totalPercent = data.goldInvestPercentage + data.propertyInvestPercentage + data.niftyInvestPercentage
+    // + data.ppfInvestPercentage + data.mfInvestPercentage + data.fdInvestPercentage;
+
+    // if(totalPercent != 100)
+    // {
+    //   alert("Investment should add upto 100%")
+    // }
+
+  }
+</script>
 </body>
 </html>
